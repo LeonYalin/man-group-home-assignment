@@ -56,9 +56,13 @@ export const ShoppingCart = ({
 
   return (
     <Paper style={{ padding: 16 }}>
+      <Typography variant="h4" sx={{marginBottom: '0.35rem'}}>
+        Cart
+      </Typography>
+
       {data.productsData.length === 0 ? (
         <div style={{ textAlign: "center" }}>
-          <AddShoppingCartIcon style={{ fontSize: "48px" }} />
+          <AddShoppingCartIcon style={{ fontSize: "52px" }} />
           <div style={{ marginTop: "10px" }}></div>
           <Typography variant="h6">Your cart is empty</Typography>
           <Typography variant="subtitle1" color="textSecondary">

@@ -11,7 +11,13 @@ import ShoppingCart from "./ShoppingCard";
 import { useEffect, useMemo, useState } from "react";
 import { Coupon, Product } from "../../shared/models";
 import { shoppingCardService } from "./shopping-card-service";
-import { prepareShoppingCardData } from "./shopping-card-utils";
+import {
+  ALL_CATEGORIES,
+  filterProducts,
+  prepareCategories,
+  prepareShoppingCardData,
+  sortProducts,
+} from "./shopping-card-utils";
 import { availableCoupons } from "./coupons-utils";
 
 export type SelectedCountsById = Record<string, number>;
@@ -22,6 +28,9 @@ export function ShoppingCardPage() {
     useState<SelectedCountsById>({});
   const [productsLoading, setProductsLoading] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [sortField, setSortField] = useState<string>("name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [categoryFilter, setCategoryFilter] = useState<string>(ALL_CATEGORIES);
   const [snackbarData, setSnackbarData] = useState({
     open: false,
     message: "",
@@ -57,11 +66,24 @@ export function ShoppingCardPage() {
     return data;
   }, [products, selectedCountsById, appliedCoupon]);
 
+  const sortedAndFilteredProducts = useMemo(() => {
+    const sortedProducts = sortProducts(products, sortField, sortOrder);
+    const sortedAndFilteredProducts = filterProducts(
+      sortedProducts,
+      categoryFilter
+    );
+    return sortedAndFilteredProducts;
+  }, [products, sortField, sortOrder, categoryFilter]);
+
+  const categories = useMemo(() => {
+    const productCategories = prepareCategories(products);
+    return productCategories;
+  }, [products]);
+
   const handleAddProduct = (productId: number) => {
     const existingProduct = selectedCountsById[productId];
     if (existingProduct) {
-      // do not add the product again
-      return;
+      return; // do not add the product again
     } else {
       setSelectedCountsById((prev) => ({
         ...prev,
@@ -101,6 +123,15 @@ export function ShoppingCardPage() {
     setAppliedCoupon(null);
   };
 
+  const handleSortChange = (sortField: string, sortOrder: "asc" | "desc") => {
+    setSortField(sortField);
+    setSortOrder(sortOrder);
+  };
+
+  const handleCategoryFilterChange = (filterValue: string) => {
+    setCategoryFilter(filterValue);
+  };
+
   const handleSnackbarClose = () => {
     setSnackbarData({ open: false, message: "", severity: "success" });
   };
@@ -111,9 +142,15 @@ export function ShoppingCardPage() {
         <Grid item xs={12} md={7}>
           <Box style={{ padding: 16, marginTop: 16 }}>
             <ProductList
-              products={products}
+              products={sortedAndFilteredProducts}
               loading={productsLoading}
+              sortField={sortField}
+              sortOrder={sortOrder}
+              categories={categories}
+              categoryFilter={categoryFilter}
               onAddProduct={handleAddProduct}
+              onSortChange={handleSortChange}
+              onCategoryFilterChange={handleCategoryFilterChange}
             />
           </Box>
         </Grid>

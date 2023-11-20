@@ -15,20 +15,45 @@ import {
 import { Product } from "../../shared/models";
 import { formatCategories } from "./shopping-card-utils";
 import CategoryIcon from "@mui/icons-material/Category";
+import { ProductListToolbar } from "./ProductListToolbar";
 
 interface Props {
   products: Product[];
   loading: boolean;
+  sortField: string;
+  sortOrder: "asc" | "desc";
+  categories: string[];
+  categoryFilter: string | null;
   onAddProduct: (productId: number) => void;
+  onSortChange: (sortField: string, sortOrder: "asc" | "desc") => void;
+  onCategoryFilterChange: (value: string) => void;
 }
 
-export const ProductList = ({ products, loading, onAddProduct }: Props) => {
+export const ProductList = ({
+  products,
+  loading,
+  sortField,
+  sortOrder,
+  categories,
+  categoryFilter,
+  onAddProduct,
+  onSortChange,
+  onCategoryFilterChange,
+}: Props) => {
   return loading ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress />
     </Box>
   ) : products.length > 0 ? (
     <TableContainer component={Paper}>
+      <ProductListToolbar
+        sortField={sortField}
+        sortOrder={sortOrder}
+        categories={categories}
+        categoryFilter={categoryFilter}
+        onSortChange={onSortChange}
+        onCategoryFilterChange={onCategoryFilterChange}
+      ></ProductListToolbar>
       <Table>
         <TableHead>
           <TableRow>
@@ -77,9 +102,10 @@ export const ProductList = ({ products, loading, onAddProduct }: Props) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        padding: "56px 16px",
       }}
     >
-      <CategoryIcon style={{ fontSize: "48px" }} />
+      <CategoryIcon style={{ fontSize: "52px" }} />
       <div style={{ marginTop: "10px" }}></div>
       <Typography variant="h6">No items found</Typography>
     </div>

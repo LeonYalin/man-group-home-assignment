@@ -1,6 +1,8 @@
 import { Coupon, CouponType, Product } from "../../shared/models";
 import { SelectedCountsById } from "./ShoppingCardPage";
 
+export const ALL_CATEGORIES = "all_categories";
+
 export interface ShoppingCardData {
   productsData: {
     product: Product;
@@ -125,11 +127,46 @@ function calculateShippingCost(
 }
 
 export function formatCategories(categories: string[]): string {
-  return categories
-    .map((c) => c.charAt(0).toUpperCase() + c.slice(1))
-    .join(", ");
+  return categories.map((c) => formatCategory(c)).join(", ");
+}
+
+export function formatCategory(category: string): string {
+  if (category === ALL_CATEGORIES) return "All Categories";
+  return category.charAt(0).toUpperCase() + category.slice(1);
 }
 
 export function formatShippingCostText(shippingCost: number): string {
   return shippingCost === 0 ? "Free" : `$${shippingCost.toFixed(2)}`;
+}
+
+export function sortProducts(
+  products: Product[],
+  sortField: string,
+  sortOrder: "asc" | "desc"
+): Product[] {
+  return [...products].sort((a: any, b: any) => {
+    if (sortOrder === "asc") {
+      return a[sortField] < b[sortField] ? -1 : 1;
+    } else {
+      return a[sortField] > b[sortField] ? -1 : 1;
+    }
+  });
+}
+
+export function filterProducts(
+  products: Product[],
+  categoryFilter: string | null
+): Product[] {
+  if (!categoryFilter || categoryFilter === ALL_CATEGORIES) {
+    return products;
+  }
+  return products.filter((p) => p.categories.includes(categoryFilter));
+}
+
+export function prepareCategories(products: Product[]): string[] {
+  const categories = Array.from(
+    new Set(products.flatMap((product) => product.categories))
+  );
+  categories.unshift(ALL_CATEGORIES);
+  return categories;
 }

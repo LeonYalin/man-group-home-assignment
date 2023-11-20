@@ -1,3 +1,4 @@
+import { mockProducts } from "../../mocks/products-mocks";
 import { Product } from "../../shared/models";
 
 export interface GetProductsResponseBody extends Array<Product> {}
@@ -23,6 +24,7 @@ export const shoppingCardService = {
       "https://man-shopping-cart-test.azurewebsites.net/api/Products"
     );
     return await res.json();
+    // return Promise.resolve(mockProducts); // for local testing
   },
   calculateCost: async (
     payload: CalculateCostRequestBody
