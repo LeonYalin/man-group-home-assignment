@@ -15,7 +15,10 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import { ShoppingCardData } from "./shopping-card-utils";
+import {
+  ShoppingCardData,
+  formatShippingCostText,
+} from "./shopping-card-utils";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Coupon } from "../../shared/models";
@@ -194,9 +197,55 @@ export const ShoppingCart = ({
       )}
 
       {data.productsData.length > 0 && (
-        <div style={{ marginTop: 16, textAlign: "right" }}>
-          <strong>Total: ${data.total.toFixed(2)}</strong>
-        </div>
+        <>
+          <div
+            style={{
+              marginTop: 16,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Typography
+              variant="caption"
+              sx={{ display: "flex", alignItems: "flex-end" }}
+            >
+              Shipping:
+              <span style={{ marginLeft: "5px" }}>
+                {formatShippingCostText(data.shippingCost)}
+              </span>
+            </Typography>
+          </div>
+          {data.discount > 0 && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                color: "lightcoral",
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{ display: "flex", alignItems: "flex-end" }}
+              >
+                Discount:
+                <span style={{ marginLeft: "5px" }}>
+                  -${data.discount.toFixed(2)}
+                </span>
+              </Typography>
+            </div>
+          )}
+
+          <div style={{ marginTop: 16, textAlign: "right" }}>
+            <strong>
+              Total: ${data.total.toFixed(2)}{" "}
+              {data.discount > 0 && (
+                <span style={{ textDecoration: "line-through" }}>
+                  ${(data.discount + data.total).toFixed(2)}
+                </span>
+              )}
+            </strong>
+          </div>
+        </>
       )}
     </Paper>
   );

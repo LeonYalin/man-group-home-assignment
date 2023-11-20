@@ -1,4 +1,3 @@
-// ProductList.tsx
 import React from "react";
 import {
   Table,
@@ -8,9 +7,7 @@ import {
   TableHead,
   TableRow,
   Button,
-  TextField,
   Paper,
-  IconButton,
   Typography,
   LinearProgress,
   Box,

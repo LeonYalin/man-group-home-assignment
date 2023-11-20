@@ -1,20 +1,18 @@
-import { Box, Container, Grid, Paper } from "@mui/material";
+import {
+  Alert,
+  AlertColor,
+  Box,
+  Container,
+  Grid,
+  Snackbar,
+} from "@mui/material";
 import { ProductList } from "./ProductsList";
 import ShoppingCart from "./ShoppingCard";
 import { useEffect, useMemo, useState } from "react";
 import { Coupon, Product } from "../../shared/models";
 import { shoppingCardService } from "./shopping-card-service";
-import {
-  ShoppingCardData,
-  availableCoupons,
-  prepareShoppingCardData,
-} from "./shopping-card-utils";
-
-const INITIAL_SHOPPING_CARD_DATA: ShoppingCardData = {
-  productsData: [],
-  total: 0,
-  shippingCost: 0,
-};
+import { prepareShoppingCardData } from "./shopping-card-utils";
+import { availableCoupons } from "./coupons-utils";
 
 export type SelectedCountsById = Record<string, number>;
 
@@ -24,6 +22,11 @@ export function ShoppingCardPage() {
     useState<SelectedCountsById>({});
   const [productsLoading, setProductsLoading] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [snackbarData, setSnackbarData] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,7 +35,11 @@ export function ShoppingCardPage() {
         const products = await shoppingCardService.getProducts();
         setProducts(products);
       } catch (error) {
-        console.error(error);
+        setSnackbarData({
+          open: true,
+          message: "Error while fetching products",
+          severity: "error",
+        });
       } finally {
         setProductsLoading(false);
       }
@@ -42,9 +49,13 @@ export function ShoppingCardPage() {
   }, []);
 
   const shoppingCardData = useMemo(() => {
-    const data = prepareShoppingCardData(products, selectedCountsById);
+    const data = prepareShoppingCardData(
+      products,
+      selectedCountsById,
+      appliedCoupon
+    );
     return data;
-  }, [products, selectedCountsById]);
+  }, [products, selectedCountsById, appliedCoupon]);
 
   const handleAddProduct = (productId: number) => {
     const existingProduct = selectedCountsById[productId];
@@ -77,16 +88,21 @@ export function ShoppingCardPage() {
     const coupon = availableCoupons.find((c) => c.Code === couponCode);
     if (coupon) {
       setAppliedCoupon(coupon);
-      // TODO: update shopping card data
     } else {
-      // show error toast
+      setSnackbarData({
+        open: true,
+        message: "Invalid coupon code",
+        severity: "error",
+      });
     }
   };
 
   const handleCouponDelete = () => {
-    console.log("handleCouponDelete");
     setAppliedCoupon(null);
-    // TODO: update shopping card data
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarData({ open: false, message: "", severity: "success" });
   };
 
   return (
@@ -115,6 +131,20 @@ export function ShoppingCardPage() {
           </Box>
         </Grid>
       </Grid>
+
+      <Snackbar
+        open={snackbarData.open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarData.severity as AlertColor}
+          sx={{ width: "100%" }}
+        >
+          {snackbarData.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

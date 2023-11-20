@@ -1,7 +1,13 @@
+export enum CouponType {
+  FreeShipping = 1,
+  Supplier = 2,
+  Category = 3,
+}
+
 export interface Coupon {
   Code: string;
   Description: string;
-  Type: number;
+  Type: CouponType;
   Discount?: number;
   Category?: string;
   SupplierId?: number;
