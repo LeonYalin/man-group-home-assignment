@@ -60,7 +60,7 @@ export function prepareShoppingCardData(
   return shoppingCardData;
 }
 
-function calculateDiscount(
+export function calculateDiscount(
   shoppingCardData: ShoppingCardData,
   appliedCoupon: Coupon | null,
   total: number
@@ -81,7 +81,7 @@ function calculateDiscount(
   return totalNoDiscount - total;
 }
 
-function calculateProductPrice(
+export function calculateProductPrice(
   product: Product,
   quantity: number,
   appliedCoupon: Coupon | null
@@ -99,7 +99,7 @@ function calculateProductPrice(
   return price;
 }
 
-function calculateProductsCost(
+export function calculateProductsCost(
   shippingCardData: ShoppingCardData,
   appliedCoupon: Coupon | null
 ): number {
@@ -110,7 +110,7 @@ function calculateProductsCost(
   return total;
 }
 
-function calculateShippingCost(
+export function calculateShippingCost(
   total: number,
   appliedCoupon: Coupon | null
 ): number {
