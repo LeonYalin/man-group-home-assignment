@@ -156,7 +156,7 @@ export function ShoppingCardPage() {
         </Grid>
 
         <Grid item xs={12} md={5}>
-          <Box style={{ padding: 16, marginTop: 16 }}>
+          <Box style={{ padding: "16px 0 0px 16px", marginTop: 16 }}>
             <ShoppingCart
               data={shoppingCardData}
               appliedCoupon={appliedCoupon}
@@ -173,6 +173,7 @@ export function ShoppingCardPage() {
         open={snackbarData.open}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleSnackbarClose}

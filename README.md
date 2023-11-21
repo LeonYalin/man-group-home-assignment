@@ -56,9 +56,15 @@ This project is a web application that allows users to browse a list of products
 
   - TypeScript
   - React
+  - Material UI
+  - Jest
 
 - **Testing:**
-  - The project is fully unit tested to ensure code reliability and maintainability.
+  - The project includes unit tests for components and utility functions to ensure the code works as expected. The tests are implemented using Jest and React Testing Library. To run the tests, use the following command:
+
+   ```bash
+   npm test
+   ```
 
 ## Getting Started
 

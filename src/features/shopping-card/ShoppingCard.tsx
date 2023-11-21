@@ -121,7 +121,7 @@ export const ShoppingCart = ({
                     <TableCell>
                       ${(product.price * quantity).toFixed(2)}
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "right" }}>
                       <IconButton
                         aria-label="delete"
                         onClick={() => handleDeleteProduct(product.id)}
@@ -155,20 +155,16 @@ export const ShoppingCart = ({
                     {appliedCoupon.Code}
                   </span>
                 </Typography>
-                <Typography variant="subtitle1" data-testid="applied-coupon-description">
+                <Typography
+                  variant="subtitle1"
+                  data-testid="applied-coupon-description"
+                >
                   {appliedCoupon.Description}
                 </Typography>
               </div>
-              <IconButton
-                aria-label="delete coupon"
-                onClick={() => onCouponDelete()}
-                size="small"
-                id="delete-coupon-button"
-                data-testid="delete-coupon-button"
-              >
-                <DeleteIcon />
-              </IconButton>
-              <Divider style={{ margin: "16px 0" }} />
+              <div>
+                <Button onClick={() => onCouponDelete()}>Remove</Button>
+              </div>
             </div>
           ) : (
             <Grid
@@ -257,7 +253,10 @@ export const ShoppingCart = ({
             </div>
           )}
 
-          <div style={{ marginTop: 16, textAlign: "right" }} data-testid="total-price-text">
+          <div
+            style={{ marginTop: 16, textAlign: "right" }}
+            data-testid="total-price-text"
+          >
             <strong>
               Total: ${data.total.toFixed(2)}{" "}
               {data.discount > 0 && (
