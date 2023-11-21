@@ -1,46 +1,87 @@
-# Getting Started with Create React App
+# Shopping Cart Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a web application that allows users to browse a list of products, add them to a shopping cart, and manage their selections. The application is built using TypeScript and React, and it provides a user-friendly interface for a seamless shopping experience.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+1. **Product Listing:**
+   - The web page displays a list of products retrieved from a remote server.
+   - The products are presented in the form of a table for easy browsing.
 
-### `npm start`
+2. **Sorting and Filtering:**
+   - Users can sort the product list by name or price, in ascending or descending order.
+   - Products can be filtered by category, allowing users to focus on specific types of products.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. **Shopping Cart:**
+   - Each product has an "Add to Cart" button that adds the product to the shopping cart.
+   - Once a product is added to the cart, it cannot be added again until it is removed.
+   - The shopping cart displays a table of added products with quantity adjustment buttons.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+4. **Quantity Adjustment:**
+   - In the shopping cart, each product has "+" and "-" buttons for users to increase or decrease the quantity.
 
-### `npm test`
+5. **Total Price Calculation:**
+   - The total price of all products in the cart is displayed at the bottom.
+   - Shipping costs are considered in the total price calculation.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+6. **Shipping Cost Rules:**
+   - If the total value is less than $20, the shipping cost is $7.
+   - If the total value is less than $40, the shipping cost is $5.
+   - If the total value is $40 or more, shipping is free.
 
-### `npm run build`
+7. **Discount Coupons:**
+   - Users can apply discount coupons for additional savings.
+   - Supported coupon codes:
+     - `freeShipping!`: Free shipping regardless of the total cost.
+     - `APPL10`: 10% off all Apple products.
+     - `AUDIO15`: 15% off all Audio products.
+     - `ELEC25`: 25% off all Electronic products.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+8. **Discount Display:**
+   - The applied coupon and the total discount value are displayed.
+   - The total price after applying the discount is shown.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technical Specifications
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Technology Stack:**
+  - TypeScript
+  - React
 
-### `npm run eject`
+- **Testing:**
+  - The project is fully unit tested to ensure code reliability and maintainability.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Getting Started
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run the project locally, follow these steps:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Clone the repository:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```bash
+   git clone <repository-url>
+   ```
 
-## Learn More
+2. Install dependencies:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm install
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+4. Open the application in your web browser:
+
+   ```
+   http://localhost:3000
+   ```
+
+## Contributions
+
+Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
