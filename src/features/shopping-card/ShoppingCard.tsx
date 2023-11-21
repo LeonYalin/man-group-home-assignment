@@ -56,7 +56,7 @@ export const ShoppingCart = ({
 
   return (
     <Paper style={{ padding: 16 }}>
-      <Typography variant="h4" sx={{marginBottom: '0.35rem'}}>
+      <Typography variant="h4" sx={{ marginBottom: "0.35rem" }}>
         Cart
       </Typography>
 
@@ -71,7 +71,7 @@ export const ShoppingCart = ({
         </div>
       ) : (
         <>
-          <TableContainer>
+          <TableContainer data-testid="shopping-card-table">
             <Table>
               <TableHead>
                 <TableRow>
@@ -84,7 +84,7 @@ export const ShoppingCart = ({
               </TableHead>
               <TableBody>
                 {data.productsData.map(({ product, quantity }) => (
-                  <TableRow key={product.id}>
+                  <TableRow key={product.id} data-product-id={product.id}>
                     <TableCell>
                       <img
                         src={product.imageUrl}
@@ -101,6 +101,7 @@ export const ShoppingCart = ({
                         disabled={quantity <= 1}
                         color="primary"
                         size="small"
+                        className="decrement-quantity-button"
                       >
                         -
                       </IconButton>
@@ -111,6 +112,7 @@ export const ShoppingCart = ({
                         }
                         color="primary"
                         size="small"
+                        className="increment-quantity-button"
                       >
                         +
                       </IconButton>
@@ -136,6 +138,7 @@ export const ShoppingCart = ({
 
           {appliedCoupon ? (
             <div
+              data-testid="applied-coupon-wrapper"
               style={{ marginTop: 16, display: "flex", alignItems: "center" }}
             >
               <div style={{ flex: 1 }}>
@@ -152,21 +155,28 @@ export const ShoppingCart = ({
                     {appliedCoupon.Code}
                   </span>
                 </Typography>
-                <Typography variant="subtitle1">
+                <Typography variant="subtitle1" data-testid="applied-coupon-description">
                   {appliedCoupon.Description}
                 </Typography>
               </div>
               <IconButton
-                aria-label="delete"
+                aria-label="delete coupon"
                 onClick={() => onCouponDelete()}
                 size="small"
+                id="delete-coupon-button"
+                data-testid="delete-coupon-button"
               >
                 <DeleteIcon />
               </IconButton>
               <Divider style={{ margin: "16px 0" }} />
             </div>
           ) : (
-            <Grid container spacing={3} sx={{ display: "flex", marginTop: 2 }}>
+            <Grid
+              className="enter-coupon-wrapper"
+              container
+              spacing={3}
+              sx={{ display: "flex", marginTop: 2 }}
+            >
               <Grid item xs={9}>
                 <TextField
                   size="small"
@@ -176,6 +186,11 @@ export const ShoppingCart = ({
                   value={couponCode}
                   disabled={!!appliedCoupon}
                   onChange={(e) => setCouponCode(e.target.value)}
+                  id="coupon-code-input"
+                  inputProps={{
+                    "data-testid": "coupon-code-input",
+                  }}
+                  data-testid="coupon-code-input"
                 />
               </Grid>
               <Grid
@@ -191,6 +206,8 @@ export const ShoppingCart = ({
                   color="primary"
                   disabled={!couponCode || !!appliedCoupon}
                   onClick={() => handleCouponApply()}
+                  id="apply-coupon-button"
+                  data-testid="apply-coupon-button"
                 >
                   Apply
                 </Button>
@@ -230,6 +247,7 @@ export const ShoppingCart = ({
               <Typography
                 variant="body2"
                 sx={{ display: "flex", alignItems: "flex-end" }}
+                data-testid="discount-text"
               >
                 Discount:
                 <span style={{ marginLeft: "5px" }}>
@@ -239,7 +257,7 @@ export const ShoppingCart = ({
             </div>
           )}
 
-          <div style={{ marginTop: 16, textAlign: "right" }}>
+          <div style={{ marginTop: 16, textAlign: "right" }} data-testid="total-price-text">
             <strong>
               Total: ${data.total.toFixed(2)}{" "}
               {data.discount > 0 && (

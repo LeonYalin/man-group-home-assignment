@@ -1,4 +1,5 @@
 export enum CouponType {
+  Undefined = 0,
   FreeShipping = 1,
   Supplier = 2,
   Category = 3,

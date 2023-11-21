@@ -1,5 +1,10 @@
-import { mockProducts } from "../../mocks/products-mocks";
+// import { mockProducts } from "../../mocks/products-mocks";
 import { Product } from "../../shared/models";
+
+export const GET_PRODUCTS_URL =
+  "https://man-shopping-cart-test.azurewebsites.net/api/Products";
+export const CALCULATE_COST_URL =
+  "https://man-shopping-cart-test.azurewebsites.net/api/Cart/CalculateCost";
 
 export interface GetProductsResponseBody extends Array<Product> {}
 
@@ -20,25 +25,20 @@ export interface CalculateCostResponseBody {
 
 export const shoppingCardService = {
   getProducts: async (): Promise<GetProductsResponseBody> => {
-    const res = await fetch(
-      "https://man-shopping-cart-test.azurewebsites.net/api/Products"
-    );
+    const res = await fetch(GET_PRODUCTS_URL);
     return await res.json();
     // return Promise.resolve(mockProducts); // for local testing
   },
   calculateCost: async (
     payload: CalculateCostRequestBody
   ): Promise<CalculateCostResponseBody> => {
-    const res = await fetch(
-      "https://man-shopping-cart-test.azurewebsites.net/api/Cart/CalculateCost",
-      {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(CALCULATE_COST_URL, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return await res.json();
   },
 };

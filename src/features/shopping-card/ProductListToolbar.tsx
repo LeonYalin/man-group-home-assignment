@@ -67,6 +67,7 @@ export const ProductListToolbar = ({
                 id="sort-field"
                 name="sortField"
                 value={sortField}
+                data-testid="sort-field-select-wrapper"
                 onChange={(event) =>
                   onSortChange(event.target.value, sortOrder)
                 }
@@ -102,6 +103,7 @@ export const ProductListToolbar = ({
               id="category-filter"
               name="categoryFilter"
               value={categoryFilter || ""}
+              data-testid="filter-by-select-wrapper"
               onChange={(event) => onCategoryFilterChange(event.target.value)}
             >
               {categories.map((category) => (
