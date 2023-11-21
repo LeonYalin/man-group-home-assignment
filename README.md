@@ -58,13 +58,15 @@ This project is a web application that allows users to browse a list of products
   - React
   - Material UI
   - Jest
+  - React Testing Library
 
 - **Testing:**
+
   - The project includes unit tests for components and utility functions to ensure the code works as expected. The tests are implemented using Jest and React Testing Library. To run the tests, use the following command:
 
-   ```bash
-   npm test
-   ```
+  ```bash
+  npm test
+  ```
 
 ## Getting Started
 
@@ -93,11 +95,3 @@ To run the project locally, follow these steps:
    ```
    http://localhost:3000
    ```
-
-## Contributions
-
-Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
